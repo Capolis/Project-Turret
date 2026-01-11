@@ -4,6 +4,7 @@ public class Projectile : MonoBehaviour{
 
     public float speed = 10f;
     public float lifetime = 3f; // Tempo até a bala sumir (performance)
+    public int damage = 1; // Dano base do tiro
 
     void Start(){
 
@@ -18,5 +19,15 @@ public class Projectile : MonoBehaviour{
         // Time.deltaTime garante que a velocidade seja por SEGUNDO, não por FRAME
         transform.Translate(Vector3.up * speed * Time.deltaTime);
 
+    }
+
+    void OnTriggerEnter2D(Collider2D other){
+        // Tenta pegar o script do Inimigo
+        EnemyController enemy = other.GetComponent<EnemyController>();
+
+        if (enemy != null){
+            enemy.TakeDamage(damage); // Aplica o dano
+            Destroy(gameObject);      // Destroi a bala
+        }
     }
 }

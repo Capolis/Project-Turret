@@ -1,33 +1,59 @@
 using UnityEngine;
+using System.Collections.Generic; // Necessário para usar Listas
 
 public class EnemySpawner : MonoBehaviour{
 
-    public GameObject enemyPrefab;
-    public float spawnRate = 1f;   // Cria 1 inimigo por segundo
-    public float spawnRadius = 12f; // Distância do centro onde eles nascem
+    [System.Serializable]
+    public class EnemyType{
+        public string name;           // Apenas para organização (ex: "Satélite Tank")
+        public GameObject prefab;     // O prefab do inimigo
+        public int minPlayerLevel;    // Nível mínimo para começar a aparecer
+        [Range(0, 100)] public int spawnChanceWeight; // Chance relativa de aparecer (Peso)
+    }
+
+    public List<EnemyType> enemyTypes; // Lista que vamos preencher no Inspector
+
+    public float spawnRate = 1f;
+    public float spawnRadius = 12f;
 
     private float nextSpawnTime = 0f;
+    private LevelSystem playerLevelSystem; // Referência para saber o nível atual
+
+    void Start(){
+        // Encontra o Player para ler o nível
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null){
+            playerLevelSystem = player.GetComponent<LevelSystem>();
+        }
+    }
 
     void Update(){
-
         if (Time.time >= nextSpawnTime){
-
             SpawnEnemy();
             nextSpawnTime = Time.time + spawnRate;
-
         }
     }
 
     void SpawnEnemy(){
+        if (playerLevelSystem == null) return;
 
-        // Gera uma posição aleatória num círculo de raio 1
-        Vector2 randomPoint = Random.insideUnitCircle.normalized;
+        // 1. Filtrar quais inimigos podem nascer no nível atual
+        List<EnemyType> availableEnemies = new List<EnemyType>();
+        int currentLevel = playerLevelSystem.level;
 
-        // Multiplica pelo raio desejado (ex: 10 metros do centro)
-        Vector2 spawnPos = randomPoint * spawnRadius;
+        foreach (EnemyType enemy in enemyTypes){
+            if (currentLevel >= enemy.minPlayerLevel){
+                availableEnemies.Add(enemy);
+            }
+        }
 
-        Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+        if (availableEnemies.Count == 0) return;
 
+        // 2. Escolher um aleatório da lista (Simples)
+        EnemyType selectedEnemy = availableEnemies[Random.Range(0, availableEnemies.Count)];
+
+        // 3. Criar o inimigo
+        Vector2 randomPoint = Random.insideUnitCircle.normalized * spawnRadius;
+        Instantiate(selectedEnemy.prefab, randomPoint, Quaternion.identity);
     }
-
 }

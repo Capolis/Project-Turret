@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 1712044559083451554}
   - component: {fileID: 7286973924974450631}
   - component: {fileID: 462527558603033016}
-  - component: {fileID: 258608806578268}
+  - component: {fileID: 948358745376434294}
   m_Layer: 8
-  m_Name: Enemy
+  m_Name: Enemy_Lvl4_Boss
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,8 +84,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -6009460897249996692, guid: 263cea199aca46c40b6945f28a2a0eb0, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.12460303, a: 1}
+  m_Sprite: {fileID: -6669106366199071909, guid: b195b958ff84d3f47bbf85acf34de07e, type: 3}
+  m_Color: {r: 0.24313727, g: 0.24313727, b: 0.24313727, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -133,10 +133,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1088898cc9c61740a5c9d9adc02b0c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  speed: 3
+  speed: 1
+  maxHealth: 10
+  damageToPlayer: 10
+  rotationSpeed: 200
   xpGemPrefab: {fileID: 1062683270072070571, guid: d41a4d091b817a840b7b3e91462e067e, type: 3}
---- !u!61 &258608806578268
-BoxCollider2D:
+--- !u!68 &948358745376434294
+EdgeCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -169,15 +172,34 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0019254684, y: 0.0038511753}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.72, y: 0.4}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1.7700653, y: 0.45391607}
+  m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
+  m_Points:
+  - {x: 0.31493104, y: 1.4813318}
+  - {x: -0.35809898, y: 1.4787445}
+  - {x: -0.21103573, y: 0.5837059}
+  - {x: -0.9081769, y: 0.6072941}
+  - {x: -0.916543, y: -0.0035157204}
+  - {x: -0.4688487, y: -0.12873602}
+  - {x: -0.6362138, y: -0.31620693}
+  - {x: -0.6507435, y: -0.5454564}
+  - {x: -0.22484112, y: -0.66206074}
+  - {x: -0.15734577, y: -1.455514}
+  - {x: 0.16889954, y: -1.448894}
+  - {x: 0.18723583, y: -1.01401}
+  - {x: 0.2899828, y: -0.62453055}
+  - {x: 0.66024876, y: -0.5216105}
+  - {x: 0.6375065, y: -0.3161652}
+  - {x: 0.55622196, y: -0.13574314}
+  - {x: 0.9100208, y: 0.0097846985}
+  - {x: 0.910944, y: 0.5843458}
+  - {x: 0.85982704, y: 0.5843458}
+  - {x: 0.406065, y: 0.5745888}
+  - {x: 0.20724964, y: 0.5494828}
+  - {x: 0.23980904, y: 0.820302}
+  - {x: 0.30981398, y: 1.1224165}
+  - {x: 0.38983667, y: 1.4807396}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
