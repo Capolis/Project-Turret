@@ -15,6 +15,10 @@ public class PlayerHealth : MonoBehaviour{
     public void TakeDamage(int damageAmount){
 
         currentHealth -= damageAmount;
+
+        if (UIManager.instance != null){
+            UIManager.instance.UpdateHealthBar(currentHealth, maxHealth);
+        }
         if (currentHealth <= 0){
             Die();
         }

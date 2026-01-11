@@ -4,7 +4,7 @@ public class EnemySpawner : MonoBehaviour{
 
     public GameObject enemyPrefab;
     public float spawnRate = 1f;   // Cria 1 inimigo por segundo
-    public float spawnRadius = 10f; // Distância do centro onde eles nascem
+    public float spawnRadius = 12f; // Distância do centro onde eles nascem
 
     private float nextSpawnTime = 0f;
 
