@@ -8,7 +8,7 @@ public class EnemySpawner : MonoBehaviour{
         public string name;           // Apenas para organização (ex: "Satélite Tank")
         public GameObject prefab;     // O prefab do inimigo
         public int minPlayerLevel;    // Nível mínimo para começar a aparecer
-        [Range(0, 100)] public int spawnChanceWeight; // Chance relativa de aparecer (Peso)
+        [Range(0, 100)] public int spawnChanceWeight; // Chance relativa de aparecer (Peso) INATIVO
     }
 
     public List<EnemyType> enemyTypes; // Lista que vamos preencher no Inspector
