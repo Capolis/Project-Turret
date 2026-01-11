@@ -38,6 +38,9 @@ public class LevelSystem : MonoBehaviour{
             UIManager.instance.UpdateLevelText(level);
             UIManager.instance.UpdateXPBar(currentXp, xpToNextLevel);
         }
+        if (UpgradeManager.instance != null){
+            UpgradeManager.instance.OpenUpgradeMenu();
+        }
 
     }
 
