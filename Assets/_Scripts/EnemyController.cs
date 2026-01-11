@@ -4,13 +4,21 @@ public class EnemyController : MonoBehaviour{
 
     public float speed = 3f;
     public GameObject xpGemPrefab;
+    [Header("Visual")]
+    public float rotationSpeed = 200f;
+
+    void Start(){
+        // Aleatoriza a velocidade entre -200 e 200 a cada spawn
+        rotationSpeed = Random.Range(-200f, 200f);
+    }
 
     void Update(){
 
         // Move o inimigo em direção ao centro (0,0,0) onde está o player
         // Vector2.MoveTowards(OndeEstou, ParaOndeVou, QuantoAndo)
         transform.position = Vector2.MoveTowards(transform.position, Vector3.zero, speed * Time.deltaTime);
-    
+        transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime); // Gira no eixo Z (frente/trás da tela 2D)
+
     }
 
     // Função automática da Unity que detecta quando algo ENTRA no colisor
