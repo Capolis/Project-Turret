@@ -136,6 +136,7 @@ MonoBehaviour:
   speed: 1
   maxHealth: 10
   damageToPlayer: 10
+  xpReward: 200
   rotationSpeed: 200
   xpGemPrefab: {fileID: 1062683270072070571, guid: d41a4d091b817a840b7b3e91462e067e, type: 3}
 --- !u!68 &948358745376434294

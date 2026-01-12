@@ -6,6 +6,7 @@ public class EnemyController : MonoBehaviour{
     public float speed = 3f;
     public int maxHealth = 1; // Vida do inimigo (1 = Hit Kill)
     public int damageToPlayer = 1;
+    public int xpReward = 10;
 
     [Header("Visual")]
     public float rotationSpeed = 200f;
@@ -40,9 +41,22 @@ public class EnemyController : MonoBehaviour{
     }
 
     void Die(){
+        // 1. Cria a gema e guarda a referência dela numa variável temporária 'gem'
+        GameObject gem = Instantiate(xpGemPrefab, transform.position, Quaternion.identity);
+
+        // 2. Acessa o script da gema recém-criada
+        ExperienceGem gemScript = gem.GetComponent<ExperienceGem>();
+
+        // 3. Sobrescreve o valor padrão (10) pelo valor deste inimigo específico
+        if (gemScript != null)
+        {
+            gemScript.xpAmount = xpReward;
+        }
+
+        // Toca som e destrói
         if (AudioManager.instance != null)
             AudioManager.instance.PlayExplosion();
-        Instantiate(xpGemPrefab, transform.position, Quaternion.identity);
+
         Destroy(gameObject);
     }
 
