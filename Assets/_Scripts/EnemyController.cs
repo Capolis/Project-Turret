@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections; // Necessário para usar IEnumerator
 
 public class EnemyController : MonoBehaviour{
 
@@ -13,9 +14,15 @@ public class EnemyController : MonoBehaviour{
     public GameObject xpGemPrefab;
 
     private int currentHealth;
+    private SpriteRenderer spriteRenderer; // Referência para mudar a cor
+    private Color originalColor;           // Para lembrar a cor original
 
     void Start(){
         currentHealth = maxHealth;
+        // Pega o componente visual do próprio inimigo
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+            originalColor = spriteRenderer.color; // Guarda a cor
         // Variação visual (opcional): Gira para lados aleatórios
         if (Random.value > 0.5f) rotationSpeed *= -1;
     }
@@ -33,11 +40,20 @@ public class EnemyController : MonoBehaviour{
         currentHealth -= damage;
 
         // Efeito visual simples: Piscar ou diminuir tamanho (opcional para polimento futuro)
-
+        if (spriteRenderer != null && gameObject.activeInHierarchy)
+            StartCoroutine(FlashEffect());
         if (currentHealth <= 0)
-        {
             Die();
-        }
+    }
+
+    IEnumerator FlashEffect(){
+        // 1. Muda para Branco (Flash)
+        spriteRenderer.color = Color.white;
+        // Caso o sprite for branco, use Color.red para feedback de dano
+        // 2. Espera uma fração de segundo (0.1s)
+        yield return new WaitForSeconds(0.1f);
+        // 3. Volta para a cor normal
+        spriteRenderer.color = originalColor;
     }
 
     void Die(){
