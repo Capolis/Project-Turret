@@ -29,7 +29,8 @@ public class LevelSystem : MonoBehaviour{
     }
 
     void LevelUp(){
-
+        if (AudioManager.instance != null)
+            AudioManager.instance.PlayLevelUp();
         currentXp -= xpToNextLevel; // O que sobrou conta para o próximo
         level++;
         xpToNextLevel += 50; // Curva de dificuldade simples (cada nível exige +50 XP)

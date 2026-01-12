@@ -38,6 +38,8 @@ public class TurretController : MonoBehaviour{
     }
 
     void Shoot(){
+        if (AudioManager.instance != null)
+            AudioManager.instance.PlayShoot();
         // Se for só 1 bala, comportamento padrão (econômico)
         if (projectileCount == 1){
             Instantiate(bulletPrefab, firePoint.position, transform.rotation);

@@ -40,6 +40,8 @@ public class EnemyController : MonoBehaviour{
     }
 
     void Die(){
+        if (AudioManager.instance != null)
+            AudioManager.instance.PlayExplosion();
         Instantiate(xpGemPrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
