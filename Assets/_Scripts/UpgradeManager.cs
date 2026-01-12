@@ -43,4 +43,12 @@ public class UpgradeManager : MonoBehaviour{
         CloseUpgradeMenu();
     }
 
+    public void UpgradeMultishot(){
+        playerWeapon.projectileCount++; // Adiciona +1 bala ao leque
+        playerWeapon.fireRate *= 1.1f;  // (Balanceamento) Atirar mais balas deixa o tiro levemente mais lento
+
+        Debug.Log("Upgrade: Multishot Adicionado!");
+        CloseUpgradeMenu();
+    }
+
 }

@@ -7,6 +7,10 @@ public class TurretController : MonoBehaviour{
     public Transform firePoint;     // De onde a bala sai
     public float fireRate = 0.5f;   // Tempo entre tiros (segundos)
 
+    [Header("Upgrades de Arma")]
+    public int projectileCount = 1;     // Quantas balas saem por tiro (1 = normal, 3 = triplo)
+    public float spreadAngle = 20f;     // Abertura do leque (em graus) se tiver mais de 1 bala
+
     private float nextFireTime = 0f; // Variável de controle interno
 
     void Update(){
@@ -34,8 +38,27 @@ public class TurretController : MonoBehaviour{
     }
 
     void Shoot(){
-        // Cria uma cópia do Prefab, na posição do FirePoint, com a rotação da Torre
-        Instantiate(bulletPrefab, firePoint.position, transform.rotation);
+        // Se for só 1 bala, comportamento padrão (econômico)
+        if (projectileCount == 1){
+            Instantiate(bulletPrefab, firePoint.position, transform.rotation);
+        }
+        else{
+            // Lógica do Leque (Shotgun)
+            // Calcula o ângulo inicial (o mais à esquerda do leque)
+            float startRotation = -spreadAngle / 2f;
+            // Calcula o passo entre cada bala
+            float angleStep = spreadAngle / (projectileCount - 1);
+
+            for (int i = 0; i < projectileCount; i++){
+                // Calcula o ângulo desta bala específica
+                float currentAngle = startRotation + (angleStep * i);
+
+                // Cria uma rotação combinada: Rotação da Torre + Ajuste do Leque
+                Quaternion rotation = transform.rotation * Quaternion.Euler(0, 0, currentAngle);
+
+                Instantiate(bulletPrefab, firePoint.position, rotation);
+            }
+        }
     }
 
 }
