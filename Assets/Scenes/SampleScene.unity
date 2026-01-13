@@ -2405,6 +2405,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2005256592}
   - component: {fileID: 2005256591}
+  - component: {fileID: 2005256593}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -2486,6 +2487,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2005256593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2005256590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e93bb2695a175b4782c5932cd825d0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RandomBackground
+  backgroundImages:
+  - {fileID: 9203059152409019480, guid: b0315fc6ca639e34abf790430b64a799, type: 3}
+  - {fileID: 1715196807288821019, guid: e0f5dc72ff977b145876057e26b013d8, type: 3}
+  - {fileID: -3305680200050646181, guid: 63ebd93f469e75c4fb05d89f19e90550, type: 3}
+  - {fileID: 2558077768198008624, guid: a0f95a9397bfecc44a73b96130c609e9, type: 3}
+  - {fileID: 7644925520427986476, guid: acb403a2d76d57f488a1296e1a131e24, type: 3}
+  - {fileID: 5978372372024809193, guid: 3367fa88c335b66419a860eb7b38edb1, type: 3}
+  - {fileID: -1726809886679642858, guid: c9b716c44e3a7a841856e486e850af85, type: 3}
 --- !u!1 &2054769660
 GameObject:
   m_ObjectHideFlags: 0

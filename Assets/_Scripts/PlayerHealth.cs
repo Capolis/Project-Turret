@@ -26,10 +26,7 @@ public class PlayerHealth : MonoBehaviour{
     }
 
     void Die(){
-
-        // Por enquanto, apenas recarregamos a cena para reiniciar o jogo
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
+        SceneManager.LoadScene("MainMenu");
     }
 
 }
