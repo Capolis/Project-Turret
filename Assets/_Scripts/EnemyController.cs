@@ -64,9 +64,13 @@ public class EnemyController : MonoBehaviour{
         ExperienceGem gemScript = gem.GetComponent<ExperienceGem>();
 
         // 3. Sobrescreve o valor padrão (10) pelo valor deste inimigo específico
-        if (gemScript != null)
-        {
+        if (gemScript != null){
             gemScript.xpAmount = xpReward;
+        }
+        // 4. Adiciona a pontuação ao ScoreManager
+        if (ScoreManager.instance != null){
+            // Usa o mesmo valor da XP ou cria uma variável nova 'scoreReward'
+            ScoreManager.instance.AddScore(xpReward);
         }
 
         // Toca som e destrói
