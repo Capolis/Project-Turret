@@ -13,6 +13,10 @@ public class EnemyController : MonoBehaviour{
     public float rotationSpeed = 200f;
     public GameObject xpGemPrefab;
 
+    [Header("Loot")]
+    public GameObject coinPrefab;
+    [Range(0, 100)] public int coinDropChance = 50; // 50% de chance
+
     private int currentHealth;
     private SpriteRenderer spriteRenderer; // Referência para mudar a cor
     private Color originalColor;           // Para lembrar a cor original
@@ -59,10 +63,8 @@ public class EnemyController : MonoBehaviour{
     void Die(){
         // 1. Cria a gema e guarda a referência dela numa variável temporária 'gem'
         GameObject gem = Instantiate(xpGemPrefab, transform.position, Quaternion.identity);
-
         // 2. Acessa o script da gema recém-criada
         ExperienceGem gemScript = gem.GetComponent<ExperienceGem>();
-
         // 3. Sobrescreve o valor padrão (10) pelo valor deste inimigo específico
         if (gemScript != null){
             gemScript.xpAmount = xpReward;
@@ -72,7 +74,14 @@ public class EnemyController : MonoBehaviour{
             // Usa o mesmo valor da XP ou cria uma variável nova 'scoreReward'
             ScoreManager.instance.AddScore(xpReward);
         }
-
+        // 2. Dropa MOEDA
+        // Rola um dado de 0 a 100. Se for menor que a chance, dropa.
+        if (Random.Range(0, 100) < coinDropChance && coinPrefab != null)
+        {
+            // Instancia a moeda um pouco ao lado para não ficar encavalada na XP
+            Vector3 offset = new Vector3(0.2f, 0.2f, 0);
+            Instantiate(coinPrefab, transform.position + offset, Quaternion.identity);
+        }
         // Toca som e destrói
         if (AudioManager.instance != null)
             AudioManager.instance.PlayExplosion();

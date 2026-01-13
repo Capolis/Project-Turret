@@ -14,7 +14,7 @@ public class EnemySpawner : MonoBehaviour{
     public List<EnemyType> enemyTypes; // Lista que vamos preencher no Inspector
 
     public float spawnRate = 1f;
-    public float spawnRadius = 12f;
+    public float spawnRadius = 18f;
 
     private float nextSpawnTime = 0f;
     private LevelSystem playerLevelSystem; // Referência para saber o nível atual

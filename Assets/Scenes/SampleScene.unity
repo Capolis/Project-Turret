@@ -2299,7 +2299,7 @@ MonoBehaviour:
     minPlayerLevel: 5
     spawnChanceWeight: 0
   spawnRate: 1
-  spawnRadius: 10
+  spawnRadius: 18
 --- !u!4 &1930238134
 Transform:
   m_ObjectHideFlags: 0

@@ -7,13 +7,14 @@ public class PlayerHealth : MonoBehaviour{
     public int currentHealth;
 
     void Start(){
-
-        currentHealth = maxHealth;
-    
+        // Lê o nível comprado. Se não tiver comprado nada, retorna 0.
+        int bonusHealth = PlayerPrefs.GetInt("Shop_HealthLvl", 0);
+        // Adiciona ao máximo base
+        maxHealth = maxHealth + bonusHealth;
+        currentHealth = maxHealth;    
     }
 
     public void TakeDamage(int damageAmount){
-
         currentHealth -= damageAmount;
 
         if (UIManager.instance != null){
@@ -22,11 +23,9 @@ public class PlayerHealth : MonoBehaviour{
         if (currentHealth <= 0){
             Die();
         }
-
     }
 
     void Die(){
         SceneManager.LoadScene("MainMenu");
     }
-
 }

@@ -10,7 +10,6 @@ public class MainMenuController : MonoBehaviour{
     void Start(){
         // Recupera o valor salvo na memória
         int bestScore = PlayerPrefs.GetInt("HighScore", 0);
-
         if (highScoreText != null){
             highScoreText.text = $"HIGH SCORE: {bestScore}";
         }
@@ -22,9 +21,6 @@ public class MainMenuController : MonoBehaviour{
     }
 
     public void QuitGame(){
-
-        Debug.Log("Saindo do jogo...");
-
         Application.Quit();
     }
 
