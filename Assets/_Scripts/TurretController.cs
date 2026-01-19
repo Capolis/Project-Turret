@@ -13,6 +13,19 @@ public class TurretController : MonoBehaviour{
 
     private float nextFireTime = 0f; // Variável de controle interno
 
+    void Start(){
+        // --- SHOP LOGIC: FIRE RATE ---
+        // Recupera quantos upgrades compramos
+        int fireRateLevel = PlayerPrefs.GetInt("Shop_FireRateLvl", 0);
+
+        // Para cada nível, aumenta a velocidade em 10% (Multiplica o delay por 0.9)
+        // Exemplo: Nível 3 = 0.9 * 0.9 * 0.9 = ~72% do tempo original (Atira 28% mais rápido)
+        if (fireRateLevel > 0){
+            float multiplier = Mathf.Pow(0.9f, fireRateLevel);
+            fireRate *= multiplier;
+        }
+    }
+
     void Update(){
         if (Time.timeScale == 0) return;
 

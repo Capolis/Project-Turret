@@ -12,3 +12,4 @@
 *.csproj
 *.unitypackage
 .DS_Store
+.vs/

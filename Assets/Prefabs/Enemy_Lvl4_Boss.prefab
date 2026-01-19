@@ -139,6 +139,8 @@ MonoBehaviour:
   xpReward: 200
   rotationSpeed: 200
   xpGemPrefab: {fileID: 1062683270072070571, guid: d41a4d091b817a840b7b3e91462e067e, type: 3}
+  coinPrefab: {fileID: 1062683270072070571, guid: e28a16bd939618547b86c96b6e4b891a, type: 3}
+  coinDropChance: 100
 --- !u!68 &948358745376434294
 EdgeCollider2D:
   m_ObjectHideFlags: 0
