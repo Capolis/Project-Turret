@@ -17,6 +17,9 @@ public class EnemyController : MonoBehaviour{
     public GameObject coinPrefab;
     [Range(0, 100)] public int coinDropChance = 50; // 50% de chance
 
+    [Header("Visual")]
+    public GameObject explosionPrefab;
+
     private int currentHealth;
     private SpriteRenderer spriteRenderer; // Referência para mudar a cor
     private Color originalColor;           // Para lembrar a cor original
@@ -61,20 +64,24 @@ public class EnemyController : MonoBehaviour{
     }
 
     void Die(){
-        // 1. Cria a gema e guarda a referência dela numa variável temporária 'gem'
+        // 1. Cria a explosão
+        if (explosionPrefab != null){
+            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        }
+        // 2. Cria a gema e guarda a referência dela numa variável temporária 'gem'
         GameObject gem = Instantiate(xpGemPrefab, transform.position, Quaternion.identity);
-        // 2. Acessa o script da gema recém-criada
+        // 3. Acessa o script da gema recém-criada
         ExperienceGem gemScript = gem.GetComponent<ExperienceGem>();
-        // 3. Sobrescreve o valor padrão (10) pelo valor deste inimigo específico
+        // 4. Sobrescreve o valor padrão (10) pelo valor deste inimigo específico
         if (gemScript != null){
             gemScript.xpAmount = xpReward;
         }
-        // 4. Adiciona a pontuação ao ScoreManager
+        // 5. Adiciona a pontuação ao ScoreManager
         if (ScoreManager.instance != null){
             // Usa o mesmo valor da XP ou cria uma variável nova 'scoreReward'
             ScoreManager.instance.AddScore(xpReward);
         }
-        // 2. Dropa MOEDA
+        // 6. Dropa MOEDA
         // Rola um dado de 0 a 100. Se for menor que a chance, dropa.
         if (Random.Range(0, 100) < coinDropChance && coinPrefab != null)
         {
@@ -85,6 +92,7 @@ public class EnemyController : MonoBehaviour{
         // Toca som e destrói
         if (AudioManager.instance != null)
             AudioManager.instance.PlayExplosion();
+
 
         Destroy(gameObject);
     }
