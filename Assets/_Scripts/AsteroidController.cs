@@ -4,7 +4,7 @@ public class AsteroidController : MonoBehaviour{
 
     [Header("Configuração Base")]
     public float minSize = 0.5f;
-    public float maxSize = 2.0f;
+    public float maxSize = 4f;
     public float baseSpeed = 2f;
     public int baseHealth = 2;
     public int damageToPlayer = 2;
@@ -68,8 +68,7 @@ public class AsteroidController : MonoBehaviour{
 
     void OnTriggerEnter2D(Collider2D other){
         // Dano no Player
-        if (other.CompareTag("Player"))
-        {
+        if (other.CompareTag("Player")){
             PlayerHealth player = other.GetComponent<PlayerHealth>();
             if (player != null) player.TakeDamage(damageToPlayer);
 

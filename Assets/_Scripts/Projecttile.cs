@@ -22,12 +22,24 @@ public class Projectile : MonoBehaviour{
     }
 
     void OnTriggerEnter2D(Collider2D other){
-        // Tenta pegar o script do Inimigo
-        EnemyController enemy = other.GetComponent<EnemyController>();
-
-        if (enemy != null){
-            enemy.TakeDamage(damage); // Aplica o dano
-            Destroy(gameObject);      // Destroi a bala
+        if (other.CompareTag("Enemy")){
+            // Tenta achar um Inimigo Padrão
+            EnemyController enemy = other.GetComponent<EnemyController>();
+            if (enemy != null){
+                enemy.TakeDamage(damage);
+            }
+            else{
+                // SE NÃO FOR INIMIGO PADRÃO, TENTA ACHAR UM ASTEROIDE
+                AsteroidController asteroid = other.GetComponent<AsteroidController>();
+                if (asteroid != null){
+                    asteroid.TakeDamage(damage);
+                }
+                /* SE NÃO FOR ASTEROIDE, TENTA O SHOOTER
+                ShooterEnemy shooter = other.GetComponent<ShooterEnemy>();
+                if (shooter != null){
+                    shooter.TakeDamage(damage);
+                }*/
+            }
         }
     }
 }

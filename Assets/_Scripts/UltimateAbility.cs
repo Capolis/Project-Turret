@@ -41,17 +41,29 @@ public class UltimateAbility : MonoBehaviour{
 
     void ActivateUltimate(){
         // Encontra TODOS os inimigos na cena
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy"); // Certifique-se que seus prefabs têm a Tag "Enemy"
+        GameObject[] targets = GameObject.FindGameObjectsWithTag("Enemy");
 
-        foreach (GameObject enemyObj in enemies){
-            EnemyController enemyScript = enemyObj.GetComponent<EnemyController>();
-            if (enemyScript != null){
-                // Aplica dano massivo
-                enemyScript.TakeDamage(damageAmount);
+        foreach (GameObject target in targets){
+            // 1. Tenta achar Inimigo Comum
+            EnemyController enemy = target.GetComponent<EnemyController>();
+            if (enemy != null){
+                enemy.TakeDamage(damageAmount);
+                continue; // Já achou, vai para o próximo alvo
             }
-        }
 
-        Debug.Log("BOOM! Ultimate usada.");
+            // 2. Se não achou, tenta achar Asteroide
+            AsteroidController asteroid = target.GetComponent<AsteroidController>();
+            if (asteroid != null){
+                asteroid.TakeDamage(damageAmount);
+                continue;
+            }
+
+            /* 3. Se não achou, tenta achar Inimigo Atirador (Shooter)
+            ShooterEnemy shooter = target.GetComponent<ShooterEnemy>();
+            if (shooter != null){
+                shooter.TakeDamage(damageAmount);
+            } */
+        }
 
         // Reinicia o cooldown
         isReady = false;

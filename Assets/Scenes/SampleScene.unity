@@ -2605,6 +2605,10 @@ MonoBehaviour:
     prefab: {fileID: 4635705042393885778, guid: d181233623db40640a918d2805d3465c, type: 3}
     minPlayerLevel: 5
     spawnChanceWeight: 0
+  - name: Asteroid
+    prefab: {fileID: 3985468417756015661, guid: f10a47e742f72a64ebbffd0606584edb, type: 3}
+    minPlayerLevel: 2
+    spawnChanceWeight: 0
   spawnRate: 1
   spawnRadius: 18
 --- !u!4 &1930238134
@@ -2713,6 +2717,7 @@ GameObject:
   - component: {fileID: 2005256592}
   - component: {fileID: 2005256591}
   - component: {fileID: 2005256593}
+  - component: {fileID: 2005256594}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -2789,7 +2794,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.064208984, y: 0.02532959, z: 0}
-  m_LocalScale: {x: 3.5600002, y: 3.5600002, z: 3.56}
+  m_LocalScale: {x: 4.39, y: 4.39, z: 4.39}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -2814,6 +2819,19 @@ MonoBehaviour:
   - {fileID: 7644925520427986476, guid: acb403a2d76d57f488a1296e1a131e24, type: 3}
   - {fileID: 5978372372024809193, guid: 3367fa88c335b66419a860eb7b38edb1, type: 3}
   - {fileID: -1726809886679642858, guid: c9b716c44e3a7a841856e486e850af85, type: 3}
+--- !u!114 &2005256594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2005256590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 711f55d52e31ebc4ebc74fe3ba31da04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BackgroundRotator
+  rotationSpeed: 0.5
 --- !u!1 &2054769660
 GameObject:
   m_ObjectHideFlags: 0
