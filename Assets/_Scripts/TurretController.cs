@@ -13,6 +13,10 @@ public class TurretController : MonoBehaviour{
 
     private float nextFireTime = 0f; // Variável de controle interno
 
+    private int currentPierceLevel = 0;
+    // Define a chave de salvamento
+    const string PIERCE_LVL_KEY = "Shop_PierceLvl";
+
     void Start(){
         // --- SHOP LOGIC: FIRE RATE ---
         // Recupera quantos upgrades compramos
@@ -24,6 +28,8 @@ public class TurretController : MonoBehaviour{
             float multiplier = Mathf.Pow(0.9f, fireRateLevel);
             fireRate *= multiplier;
         }
+        // --- CARREGA O NÍVEL DE PIERCE ---
+        currentPierceLevel = PlayerPrefs.GetInt(PIERCE_LVL_KEY, 0);
     }
 
     void Update(){
@@ -56,6 +62,14 @@ public class TurretController : MonoBehaviour{
         // Se for só 1 bala, comportamento padrão (econômico)
         if (projectileCount == 1){
             Instantiate(bulletPrefab, firePoint.position, transform.rotation);
+            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, transform.rotation);
+            // Configura a perfuração
+            // Pega o script da bala que acabamos de criar
+            Projectile bulletScript = bullet.GetComponent<Projectile>();
+            if (bulletScript != null){
+                // Base é 1 + o nível comprado (Lvl 1 = perfura 2, Lvl 2 = perfura 3...)
+                bulletScript.pierceCount = 1 + currentPierceLevel;
+            }
         }
         else{
             // Lógica do Leque (Shotgun)
@@ -63,15 +77,18 @@ public class TurretController : MonoBehaviour{
             float startRotation = -spreadAngle / 2f;
             // Calcula o passo entre cada bala
             float angleStep = spreadAngle / (projectileCount - 1);
-
             for (int i = 0; i < projectileCount; i++){
                 // Calcula o ângulo desta bala específica
                 float currentAngle = startRotation + (angleStep * i);
-
                 // Cria uma rotação combinada: Rotação da Torre + Ajuste do Leque
                 Quaternion rotation = transform.rotation * Quaternion.Euler(0, 0, currentAngle);
-
-                Instantiate(bulletPrefab, firePoint.position, rotation);
+                // Define o pierceCount da bala instanciada
+                Instantiate(bulletPrefab, firePoint.position, transform.rotation);
+                GameObject bullet = Instantiate(bulletPrefab, firePoint.position, rotation);
+                Projectile bulletScript = bullet.GetComponent<Projectile>();
+                if (bulletScript != null){
+                    bulletScript.pierceCount = 1 + currentPierceLevel;
+                }
             }
         }
     }
