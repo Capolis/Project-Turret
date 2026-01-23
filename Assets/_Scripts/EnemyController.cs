@@ -20,12 +20,17 @@ public class EnemyController : MonoBehaviour{
     [Header("Visual")]
     public GameObject explosionPrefab;
 
-    private int currentHealth;
-    private SpriteRenderer spriteRenderer; // Referência para mudar a cor
-    private Color originalColor;           // Para lembrar a cor original
+    [Header("UI World")]
+    public GameObject damagePopupPrefab;
 
-    void Start(){
+    protected int currentHealth;
+    protected SpriteRenderer spriteRenderer; // Referência para mudar a cor
+    protected Color originalColor;           // Para lembrar a cor original
+    protected Transform player;
+
+    protected virtual void Start(){
         currentHealth = maxHealth;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         // Pega o componente visual do próprio inimigo
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer != null)
@@ -34,7 +39,7 @@ public class EnemyController : MonoBehaviour{
         if (Random.value > 0.5f) rotationSpeed *= -1;
     }
 
-    void Update(){
+    protected virtual void Update(){
         // Move o inimigo em direção ao centro (0,0,0) onde está o player
         // Vector2.MoveTowards(OndeEstou, ParaOndeVou, QuantoAndo)
         transform.position = Vector2.MoveTowards(transform.position, Vector3.zero, speed * Time.deltaTime);
@@ -45,12 +50,17 @@ public class EnemyController : MonoBehaviour{
     // Função pública para levar dano
     public void TakeDamage(int damage){
         currentHealth -= damage;
-
+        // Mostra o popup de dano
+        if (damagePopupPrefab != null){
+            // Cria o texto na posição do inimigo
+            GameObject popup = Instantiate(damagePopupPrefab, transform.position, Quaternion.identity);
+            // Configura o valor. (Opcional: Se damage > 5 considere Crítico 'true')
+            popup.GetComponent<DamagePopup>().Setup(damage, damage >= 3);
+        }
         // Efeito visual simples: Piscar ou diminuir tamanho (opcional para polimento futuro)
         if (spriteRenderer != null && gameObject.activeInHierarchy)
             StartCoroutine(FlashEffect());
-        if (currentHealth <= 0)
-            Die();
+        if (currentHealth <= 0) Die();
     }
 
     IEnumerator FlashEffect(){

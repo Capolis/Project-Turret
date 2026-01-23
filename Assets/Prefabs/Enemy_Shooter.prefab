@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 5963361790356402631}
   - component: {fileID: 1712044559083451554}
   - component: {fileID: 7286973924974450631}
-  - component: {fileID: 462527558603033016}
-  - component: {fileID: 948358745376434294}
+  - component: {fileID: 258608806578268}
+  - component: {fileID: 8018647001927154025}
   m_Layer: 8
-  m_Name: Enemy_Lvl4_Boss
+  m_Name: Enemy_Shooter
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 4635705042393885778}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.04, y: 4.22, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 8.0513, y: 4.22, z: 0}
+  m_LocalScale: {x: 1.0183, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -6669106366199071909, guid: b195b958ff84d3f47bbf85acf34de07e, type: 3}
+  m_Sprite: {fileID: 8128793977334069979, guid: bc2fedd1e11889a449b453b3bec8afc8, type: 3}
   m_Color: {r: 0.24313727, g: 0.24313727, b: 0.24313727, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -121,30 +121,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &462527558603033016
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4635705042393885778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1088898cc9c61740a5c9d9adc02b0c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  speed: 1
-  maxHealth: 10
-  damageToPlayer: 10
-  xpReward: 200
-  rotationSpeed: 200
-  xpGemPrefab: {fileID: 1062683270072070571, guid: d41a4d091b817a840b7b3e91462e067e, type: 3}
-  coinPrefab: {fileID: 1062683270072070571, guid: e28a16bd939618547b86c96b6e4b891a, type: 3}
-  coinDropChance: 100
-  explosionPrefab: {fileID: 8920138664460498325, guid: d73c2459de434354fb31dc61aa096864, type: 3}
-  damagePopupPrefab: {fileID: 6528194408200524653, guid: ce76df485db8a35468fc0c8a7fd64974, type: 3}
---- !u!68 &948358745376434294
-EdgeCollider2D:
+--- !u!61 &258608806578268
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -177,34 +155,41 @@ EdgeCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.008611023, y: 0.0038511753}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.24, y: 0.4}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.2039844, y: 0.3903718}
   m_EdgeRadius: 0
-  m_Points:
-  - {x: 0.31493104, y: 1.4813318}
-  - {x: -0.35809898, y: 1.4787445}
-  - {x: -0.21103573, y: 0.5837059}
-  - {x: -0.9081769, y: 0.6072941}
-  - {x: -0.916543, y: -0.0035157204}
-  - {x: -0.4688487, y: -0.12873602}
-  - {x: -0.6362138, y: -0.31620693}
-  - {x: -0.6507435, y: -0.5454564}
-  - {x: -0.22484112, y: -0.66206074}
-  - {x: -0.15734577, y: -1.455514}
-  - {x: 0.16889954, y: -1.448894}
-  - {x: 0.18723583, y: -1.01401}
-  - {x: 0.2899828, y: -0.62453055}
-  - {x: 0.66024876, y: -0.5216105}
-  - {x: 0.6375065, y: -0.3161652}
-  - {x: 0.55622196, y: -0.13574314}
-  - {x: 0.9100208, y: 0.0097846985}
-  - {x: 0.910944, y: 0.5843458}
-  - {x: 0.85982704, y: 0.5843458}
-  - {x: 0.406065, y: 0.5745888}
-  - {x: 0.20724964, y: 0.5494828}
-  - {x: 0.23980904, y: 0.820302}
-  - {x: 0.30981398, y: 1.1224165}
-  - {x: 0.38983667, y: 1.4807396}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
+--- !u!114 &8018647001927154025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4635705042393885778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6c54d70d765d794dba7270529fae1d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShooterEnemy
+  speed: 3
+  maxHealth: 1
+  damageToPlayer: 1
+  xpReward: 10
+  rotationSpeed: 100
+  xpGemPrefab: {fileID: 1062683270072070571, guid: d41a4d091b817a840b7b3e91462e067e, type: 3}
+  coinPrefab: {fileID: 1062683270072070571, guid: e28a16bd939618547b86c96b6e4b891a, type: 3}
+  coinDropChance: 50
+  explosionPrefab: {fileID: 8920138664460498325, guid: d73c2459de434354fb31dc61aa096864, type: 3}
+  damagePopupPrefab: {fileID: 6528194408200524653, guid: ce76df485db8a35468fc0c8a7fd64974, type: 3}
+  stopDistance: 5
+  retreatDistance: 3
+  enemyBulletPrefab: {fileID: 761739135291585106, guid: 10cc30a2d2b6d054cae101ef933a3f99, type: 3}
+  fireRate: 2

@@ -64,7 +64,9 @@ public class UltimateAbility : MonoBehaviour{
                 shooter.TakeDamage(damageAmount);
             } */
         }
-
+        // Efeito de câmera
+        if (CameraShake.instance != null)
+            CameraShake.instance.Shake(0.5f, 0.3f); // Treme por 0.5s
         // Reinicia o cooldown
         isReady = false;
         currentCooldown = cooldownTime;

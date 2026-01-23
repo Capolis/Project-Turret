@@ -16,13 +16,14 @@ public class PlayerHealth : MonoBehaviour{
 
     public void TakeDamage(int damageAmount){
         currentHealth -= damageAmount;
-
+        // Atualiza a UI da barra de vida
         if (UIManager.instance != null){
             UIManager.instance.UpdateHealthBar(currentHealth, maxHealth);
         }
-        if (currentHealth <= 0){
-            Die();
-        }
+        // Efeito de câmera ao levar dano
+        if (CameraShake.instance != null)
+            CameraShake.instance.Shake(0.2f, 0.2f); // Tremidinha rápida
+        if (currentHealth <= 0) Die(); // Chama a função de morrer
     }
 
     void Die(){
