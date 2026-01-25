@@ -49,8 +49,6 @@ public class TurretController : MonoBehaviour{
         // 3. Cálculo Seguro dos Projéteis
         // Base (1) + Nível comprado. Simples e sem erro.
         currentProjectileCount = baseProjectileCount + projectileLevel;
-
-        Debug.Log($"Stats Atualizados: Rate {currentFireRate} | Proj {currentProjectileCount} | Pierce {currentPierceLevel}");
     }
 
     void Update(){
