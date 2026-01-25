@@ -2,34 +2,55 @@ using UnityEngine;
 
 public class TurretController : MonoBehaviour{
 
-    [Header("Configurações de Tiro")]
-    public GameObject bulletPrefab; // O modelo da bala
-    public Transform firePoint;     // De onde a bala sai
-    public float fireRate = 0.5f;   // Tempo entre tiros (segundos)
+    [Header("Configuração Base (Valores Originais)")]
+    public GameObject bulletPrefab;
+    public Transform firePoint;
 
-    [Header("Upgrades de Arma")]
-    public int projectileCount = 1;     // Quantas balas saem por tiro (1 = normal, 3 = triplo)
-    public float spreadAngle = 20f;     // Abertura do leque (em graus) se tiver mais de 1 bala
+    // BASE: Estes valores nunca mudam durante o jogo. São o ponto de partida.
+    public float baseFireRate = 0.5f;
+    public int baseProjectileCount = 1;
 
-    private float nextFireTime = 0f; // Variável de controle interno
+    [Header("Configurações do Leque")]
+    public float spreadAngle = 20f;
 
+    // ATUAIS: Estas variáveis são calculadas (Base + Nível da Loja)
+    // Usamos [HideInInspector] para você não mexer nelas sem querer na Unity
+    [HideInInspector] public float currentFireRate;
+    [HideInInspector] public int currentProjectileCount;
     private int currentPierceLevel = 0;
-    // Define a chave de salvamento
+
+    private float nextFireTime = 0f;
+
+    // Chaves de salvamento
     const string PIERCE_LVL_KEY = "Shop_PierceLvl";
+    const string FIRERATE_LVL_KEY = "Shop_FireRateLvl";
+    const string PROJECTILE_LVL_KEY = "Shop_ProjectileLvl";
 
     void Start(){
-        // --- SHOP LOGIC: FIRE RATE ---
-        // Recupera quantos upgrades compramos
-        int fireRateLevel = PlayerPrefs.GetInt("Shop_FireRateLvl", 0);
+        // Ao iniciar, calcula os status baseados no que está salvo
+        UpdateTurretStats();
+    }
 
-        // Para cada nível, aumenta a velocidade em 10% (Multiplica o delay por 0.9)
-        // Exemplo: Nível 3 = 0.9 * 0.9 * 0.9 = ~72% do tempo original (Atira 28% mais rápido)
-        if (fireRateLevel > 0){
-            float multiplier = Mathf.Pow(0.9f, fireRateLevel);
-            fireRate *= multiplier;
-        }
-        // --- CARREGA O NÍVEL DE PIERCE ---
+    // --- ESSA É A FUNÇÃO QUE A LOJA VAI CHAMAR ---
+    public void UpdateTurretStats(){
+        // 1. Carrega os níveis salvos
+        int fireRateLevel = PlayerPrefs.GetInt(FIRERATE_LVL_KEY, 0);
+        int projectileLevel = PlayerPrefs.GetInt(PROJECTILE_LVL_KEY, 0);
         currentPierceLevel = PlayerPrefs.GetInt(PIERCE_LVL_KEY, 0);
+
+        // 2. Cálculo Seguro do Fire Rate
+        // Pega o BASE (0.5) e multiplica pela potência.
+        // Nunca modificamos a variável 'baseFireRate'
+        currentFireRate = baseFireRate * Mathf.Pow(0.9f, fireRateLevel);
+
+        // Trava de segurança: Limite de velocidade (0.05s)
+        if (currentFireRate < 0.05f) currentFireRate = 0.05f;
+
+        // 3. Cálculo Seguro dos Projéteis
+        // Base (1) + Nível comprado. Simples e sem erro.
+        currentProjectileCount = baseProjectileCount + projectileLevel;
+
+        Debug.Log($"Stats Atualizados: Rate {currentFireRate} | Proj {currentProjectileCount} | Pierce {currentPierceLevel}");
     }
 
     void Update(){
@@ -47,49 +68,49 @@ public class TurretController : MonoBehaviour{
     }
 
     void HandleShooting(){
-        // Lógica simples de Cooldown: Se o tempo atual do jogo for maior que o tempo permitido...
-        if (Time.time >= nextFireTime)
-        {
+        // Usa a variável calculada 'currentFireRate'
+        if (Time.time >= nextFireTime){
             Shoot();
-            // Define o próximo momento permitido para atirar
-            nextFireTime = Time.time + fireRate;
+            nextFireTime = Time.time + currentFireRate;
         }
     }
 
     void Shoot(){
         if (AudioManager.instance != null)
             AudioManager.instance.PlayShoot();
-        // Se for só 1 bala, comportamento padrão (econômico)
-        if (projectileCount == 1){
-            Instantiate(bulletPrefab, firePoint.position, transform.rotation);
-            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, transform.rotation);
-            // Configura a perfuração
-            // Pega o script da bala que acabamos de criar
-            Projectile bulletScript = bullet.GetComponent<Projectile>();
-            if (bulletScript != null){
-                // Base é 1 + o nível comprado (Lvl 1 = perfura 2, Lvl 2 = perfura 3...)
-                bulletScript.pierceCount = 1 + currentPierceLevel;
-            }
+
+        // Se for tiro único
+        if (currentProjectileCount == 1){
+            CreateBullet(transform.rotation);
         }
         else{
             // Lógica do Leque (Shotgun)
-            // Calcula o ângulo inicial (o mais à esquerda do leque)
             float startRotation = -spreadAngle / 2f;
-            // Calcula o passo entre cada bala
-            float angleStep = spreadAngle / (projectileCount - 1);
-            for (int i = 0; i < projectileCount; i++){
-                // Calcula o ângulo desta bala específica
+            float angleStep = spreadAngle / (currentProjectileCount - 1);
+
+            for (int i = 0; i < currentProjectileCount; i++)
+            {
                 float currentAngle = startRotation + (angleStep * i);
-                // Cria uma rotação combinada: Rotação da Torre + Ajuste do Leque
+                // Soma a rotação da torre com a rotação do leque
                 Quaternion rotation = transform.rotation * Quaternion.Euler(0, 0, currentAngle);
-                // Define o pierceCount da bala instanciada
-                Instantiate(bulletPrefab, firePoint.position, transform.rotation);
-                GameObject bullet = Instantiate(bulletPrefab, firePoint.position, rotation);
-                Projectile bulletScript = bullet.GetComponent<Projectile>();
-                if (bulletScript != null){
-                    bulletScript.pierceCount = 1 + currentPierceLevel;
-                }
+
+                CreateBullet(rotation);
             }
+        }
+    }
+
+    // Função auxiliar para criar a bala e configurar o Pierce
+    // Evita repetir código e evita o erro de instanciar 2x
+    void CreateBullet(Quaternion rotation){
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, rotation);
+
+        Projectile bulletScript = bullet.GetComponent<Projectile>();
+
+        if (bulletScript == null)
+            bulletScript = bullet.GetComponent<Projectile>(); // Tenta achar com o outro nome caso tenha mudado
+
+        if (bulletScript != null){
+            bulletScript.pierceCount = 1 + currentPierceLevel;
         }
     }
 

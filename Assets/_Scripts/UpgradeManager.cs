@@ -27,7 +27,7 @@ public class UpgradeManager : MonoBehaviour{
 
     public void UpgradeFireRate(){
         // Diminui o tempo entre tiros em 10% (Tiro mais rápido)
-        playerWeapon.fireRate *= 0.9f;
+        playerWeapon.currentFireRate *= 0.9f;
         CloseUpgradeMenu();
     }
 
@@ -44,8 +44,8 @@ public class UpgradeManager : MonoBehaviour{
     }
 
     public void UpgradeMultishot(){
-        playerWeapon.projectileCount++; // Adiciona +1 bala ao leque
-        playerWeapon.fireRate *= 1.1f;  // (Balanceamento) Atirar mais balas deixa o tiro levemente mais lento
+        playerWeapon.currentProjectileCount++; // Adiciona +1 bala ao leque
+        playerWeapon.currentFireRate *= 1.1f;  // (Balanceamento) Atirar mais balas deixa o tiro levemente mais lento
 
         CloseUpgradeMenu();
     }

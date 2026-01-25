@@ -6,8 +6,9 @@ public class AsteroidController : MonoBehaviour{
     public float minSize = 0.5f;
     public float maxSize = 4f;
     public float baseSpeed = 2f;
-    public int baseHealth = 2;
+    public int baseHealth = 20;
     public int damageToPlayer = 2;
+    public GameObject hitEffectPrefab; // Arraste o mesmo da explosão ou uma partícula menor
 
     [Header("Loot")]
     public GameObject xpGemPrefab;
@@ -24,7 +25,6 @@ public class AsteroidController : MonoBehaviour{
         transform.localScale = Vector3.one * randomSize;
 
         // --- VIDA PROPORCIONAL AO TAMANHO ---
-        // Ex: Se tamanho for 2.0 (Dobro), vida será maior.
         // Mathf.RoundToInt arredonda para número inteiro.
         currentHealth = Mathf.RoundToInt(baseHealth * randomSize);
 
@@ -49,7 +49,11 @@ public class AsteroidController : MonoBehaviour{
 
     public void TakeDamage(int damage){
         currentHealth -= damage;
-
+        // Efeito de impacto
+        if (hitEffectPrefab != null){
+            GameObject vfx = Instantiate(hitEffectPrefab, transform.position, Quaternion.identity);
+            vfx.transform.localScale = Vector3.one * 0.5f; // Metade do tamanho normal
+        }
         if (currentHealth <= 0){
             Die();
         }
@@ -58,7 +62,6 @@ public class AsteroidController : MonoBehaviour{
     void Die(){
         if (explosionPrefab != null)
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-
         // Asteroides podem não dar XP ou dar menos
         if (Random.value > 0.5f) // 50% chance de dropar XP
             Instantiate(xpGemPrefab, transform.position, Quaternion.identity);
@@ -70,8 +73,8 @@ public class AsteroidController : MonoBehaviour{
         // Dano no Player
         if (other.CompareTag("Player")){
             PlayerHealth player = other.GetComponent<PlayerHealth>();
-            if (player != null) player.TakeDamage(damageToPlayer);
-
+            if (player != null) 
+                player.TakeDamage(damageToPlayer);
             // O asteroide se quebra no player
             Die();
         }

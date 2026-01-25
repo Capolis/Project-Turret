@@ -35,11 +35,11 @@ public class Projectile : MonoBehaviour{
                 if (asteroid != null){
                     asteroid.TakeDamage(damage);
                 }
-                /* SE NÃO FOR ASTEROIDE, TENTA O SHOOTER
+                // SE NÃO FOR ASTEROIDE, TENTA O SHOOTER
                 ShooterEnemy shooter = other.GetComponent<ShooterEnemy>();
                 if (shooter != null){
                     shooter.TakeDamage(damage);
-                }*/
+                }
             }
             // Reduz 1 do contador de perfuração
             pierceCount--;

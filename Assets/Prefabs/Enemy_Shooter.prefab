@@ -183,13 +183,13 @@ MonoBehaviour:
   maxHealth: 1
   damageToPlayer: 1
   xpReward: 10
-  rotationSpeed: 100
+  rotationSpeed: 200
   xpGemPrefab: {fileID: 1062683270072070571, guid: d41a4d091b817a840b7b3e91462e067e, type: 3}
   coinPrefab: {fileID: 1062683270072070571, guid: e28a16bd939618547b86c96b6e4b891a, type: 3}
   coinDropChance: 50
   explosionPrefab: {fileID: 8920138664460498325, guid: d73c2459de434354fb31dc61aa096864, type: 3}
   damagePopupPrefab: {fileID: 6528194408200524653, guid: ce76df485db8a35468fc0c8a7fd64974, type: 3}
-  stopDistance: 10
-  retreatDistance: 3
+  stopDistance: 8
+  retreatDistance: 4
   enemyBulletPrefab: {fileID: 761739135291585106, guid: 10cc30a2d2b6d054cae101ef933a3f99, type: 3}
   fireRate: 2

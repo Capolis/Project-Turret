@@ -11,6 +11,9 @@ public class UltimateAbility : MonoBehaviour{
     [Header("UI")]
     public Image cooldownFillImage; // A imagem colorida que enche
 
+    [Header("Audio")]
+    public AudioClip ultimateSound;
+
     private float currentCooldown = 0f;
     private bool isReady = false;
 
@@ -58,15 +61,18 @@ public class UltimateAbility : MonoBehaviour{
                 continue;
             }
 
-            /* 3. Se não achou, tenta achar Inimigo Atirador (Shooter)
+            // 3. Se não achou, tenta achar Inimigo Atirador (Shooter)
             ShooterEnemy shooter = target.GetComponent<ShooterEnemy>();
             if (shooter != null){
                 shooter.TakeDamage(damageAmount);
-            } */
+            } 
         }
         // Efeito de câmera
         if (CameraShake.instance != null)
-            CameraShake.instance.Shake(0.5f, 0.3f); // Treme por 0.5s
+            CameraShake.instance.Shake(0.5f, 0.4f); // Treme por 0.5s
+        // Toca o som da ultimate
+        if (ultimateSound != null)
+            AudioSource.PlayClipAtPoint(ultimateSound, Camera.main.transform.position);
         // Reinicia o cooldown
         isReady = false;
         currentCooldown = cooldownTime;
