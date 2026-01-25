@@ -189,7 +189,7 @@ MonoBehaviour:
   coinDropChance: 50
   explosionPrefab: {fileID: 8920138664460498325, guid: d73c2459de434354fb31dc61aa096864, type: 3}
   damagePopupPrefab: {fileID: 6528194408200524653, guid: ce76df485db8a35468fc0c8a7fd64974, type: 3}
-  stopDistance: 5
+  stopDistance: 10
   retreatDistance: 3
   enemyBulletPrefab: {fileID: 761739135291585106, guid: 10cc30a2d2b6d054cae101ef933a3f99, type: 3}
   fireRate: 2

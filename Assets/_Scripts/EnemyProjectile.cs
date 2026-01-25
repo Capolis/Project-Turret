@@ -7,6 +7,8 @@ public class EnemyProjectile : MonoBehaviour{
 
     void Update(){
         transform.Translate(Vector3.up * speed * Time.deltaTime);
+        // Destrói depois de 5s para não sobrar lixo na memória
+        Destroy(gameObject, 5f);
     }
 
     void OnTriggerEnter2D(Collider2D other){

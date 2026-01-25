@@ -4,7 +4,7 @@ using UnityEngine;
 public class ShooterEnemy : EnemyController{
 
     [Header("Configuração de Atirador")]
-    public float stopDistance = 5f; // Distância segura para parar
+    public float stopDistance = 10f; // Distância segura para parar
     public float retreatDistance = 3f; // Se o player chegar muito perto, ele recua
 
     [Header("Arma")]
