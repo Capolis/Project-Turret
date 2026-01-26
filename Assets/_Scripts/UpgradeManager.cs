@@ -20,7 +20,6 @@ public class UpgradeManager : MonoBehaviour{
 
     public void CloseUpgradeMenu(){
         levelUpPanel.SetActive(false); // Esconde o menu
-        Time.timeScale = 1f;           // DESPAUSA O JOGO
     }
 
     // --- OPÇÕES DE UPGRADE ---
@@ -29,6 +28,8 @@ public class UpgradeManager : MonoBehaviour{
         // Diminui o tempo entre tiros em 10% (Tiro mais rápido)
         playerWeapon.currentFireRate *= 0.9f;
         CloseUpgradeMenu();
+        if (LevelSystem.instance != null) 
+            LevelSystem.instance.FinishLevelUp();
     }
 
     public void UpgradeHeal(){
@@ -36,18 +37,19 @@ public class UpgradeManager : MonoBehaviour{
         playerHealth.currentHealth += 2;
         if (playerHealth.currentHealth > playerHealth.maxHealth)
             playerHealth.currentHealth = playerHealth.maxHealth;
-
         // Atualiza a barra de vida visualmente
         UIManager.instance.UpdateHealthBar(playerHealth.currentHealth, playerHealth.maxHealth);
-
         CloseUpgradeMenu();
+        if (LevelSystem.instance != null)
+            LevelSystem.instance.FinishLevelUp();
     }
 
     public void UpgradeMultishot(){
         playerWeapon.currentProjectileCount++; // Adiciona +1 bala ao leque
         playerWeapon.currentFireRate *= 1.1f;  // (Balanceamento) Atirar mais balas deixa o tiro levemente mais lento
-
         CloseUpgradeMenu();
+        if (LevelSystem.instance != null)
+            LevelSystem.instance.FinishLevelUp();
     }
 
 }
